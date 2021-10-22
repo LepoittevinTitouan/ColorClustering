@@ -4,6 +4,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Pool, cpu_count
+import os
 
 class KMeans():
     def __init__(self, k, euclidienne):
@@ -99,7 +100,15 @@ class KMeans():
 
             ax.scatter(X, Y, Z, c = C)
             ax.set_title("k = " + str(self.k) + " (iteration n° " + str(iter) + ")")
-            plt.savefig("./centroidsSRC/plot" + str(iter) + ".png")
+
+            script_dir = os.path.dirname(__file__)
+            results_dir = os.path.join(script_dir, 'centroidsSRC/')
+            sample_file_name = str(iter) + ".png"
+
+            if not os.path.isdir(results_dir):
+                os.makedirs(results_dir)
+
+            plt.savefig(results_dir + sample_file_name)
             plt.close()
 
             iter += 1
