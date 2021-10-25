@@ -36,14 +36,16 @@ def upload_image():
         pass
 
 def startDBscan(filename):
-    newData = DBScan.process(filename, 2, 4)
+    eps = 8
+    minPts = 4
+    newData = DBScan.process(filename, eps, minPts)
     size = utils.getSize(filename)
     flatData = [int(item) for sublist in newData for item in sublist]
     flatData = bytes(flatData)
     newImage = Image.frombytes('RGB', size, flatData)
     filename = filename[filename.rfind("/") + 1 :]
     distanceType = "euclidienne" if euclidienne else "manhattan"
-    newName = "DBScan_" + str(distanceType) + "_" + filename 
+    newName = "DBScan_" + str(distanceType) + "_" + str(eps) + "_" + str(minPts) + "_" + filename 
     newImage.save("./results/" + newName)
     im = ImageTk.PhotoImage(newImage)
     sign_image.configure(image=im)
@@ -69,15 +71,17 @@ def startKMeans(filename):
         sign_image.configure(image=im)
         sign_image.image = im
 
-        fp_in = "./centroidsSRC/*.png"
-        filename = filename[:filename.rfind('.')]
-        fp_out = "./centroids/centroids_" + str(clusters) + "_" + str(distanceType) + "_" + filename + ".gif"
+        # Si l'on souhaite obtenir le GIF de représentation des centroids
+        
+        # fp_in = "./centroidsSRC/*.png"
+        # filename = filename[:filename.rfind('.')]
+        # fp_out = "./centroids/centroids_" + str(clusters) + "_" + str(distanceType) + "_" + filename + ".gif"
 
-        img, *imgs = [Image.open(f) for f in sorted(glob.glob(fp_in), key=os.path.getmtime)]
-        img.save(fp=fp_out, format='GIF', append_images=imgs, save_all=True, duration=200, loop=0)
+        # img, *imgs = [Image.open(f) for f in sorted(glob.glob(fp_in), key=os.path.getmtime)]
+        # img.save(fp=fp_out, format='GIF', append_images=imgs, save_all=True, duration=200, loop=0)
 
-        for f in glob.glob(fp_in):
-            os.remove(f)
+        # for f in glob.glob(fp_in):
+        #     os.remove(f)
     
     except :
         pass

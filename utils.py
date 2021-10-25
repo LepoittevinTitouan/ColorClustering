@@ -24,3 +24,10 @@ def distanceEuclidienne(a, b):
 
 def distanceManhattan(a, b):
     return abs(b[0] - a[0]) + abs(b[1] - a[1]) + abs(b[2] - a[2])
+
+if __name__ == "__main__":
+    rouge = tuple([255,0,0])
+    bleu = tuple([0,0,255])
+
+    print(distanceEuclidienne(rouge,bleu))
+    print(distanceManhattan(rouge,bleu))

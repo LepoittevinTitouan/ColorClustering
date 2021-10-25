@@ -6,14 +6,16 @@ Ce projet à été réalisé dans le cadre du cours de forage de données de l'U
 ## Technologie
 Cette application est développée en python (3.7.8). Le point d'entrée du programme se trouve dans le fichier [main.py](https://github.com/LepoittevinTitouan/ColorClustering/blob/master/main.py).
 
-L'interface à été réalisée avec tkinter, tandis que les algorithmes de clustering sont implémentés par mes soins. Les dépendances ne faisant pas partie des librairies standard de python sont numpy, matplotlib et Pillow.
+L'interface à été réalisée avec *tkinter*, tandis que les algorithmes de clustering sont implémentés par mes soins. Les dépendances ne faisant pas partie des librairies standard de python sont *numpy*, *matplotlib* et *Pillow*.
 
 ## Utilisation
 Dans la fenêtre de l'application, un bouton permet d'ouvrir l'explorateur de fichier pour sélectionner une image d'entrée. 
 
 Un autre bouton, placé en haut de la fenetre, permet d'alterner entre deux calculs de la distance. Les deux algorithmes étudiés utilisent cette distance, on peut choisir entre la distance Euclidienne : $$d = \sqrt{(R_a-R_b)^2+(G_a - G_b)^2+(B_a - B_b)}$$ et la distance de Manhattan : $$d = |R_a - R_b|+|G_a - G_b|+|B_a - B_b|$$ pour des pixels de la forme : $$A=(R_a,G_a,B_a)$$
 
-* Lors de la sélection de KMeans, une fenêtre va proposer d'entrer un nombre entier de clusters k.
+Deux boutons, placés à droite de l'image, permettent de sélectionner l'algorithme avec lequel sera traité l'image. Lors de la sélection de KMeans, une fenêtre va proposer d'entrer un nombre entier de clusters k. Tandis qu'un clic sur le bouton DBScan lancera instantanément l'algorithme avec les paramètres indiqué dans le code.
+
+Pour changer les paramètres epsilon et minPts de l'algorihme DBScan, il faut se rendre dans le fichier [main.py](https://github.com/LepoittevinTitouan/ColorClustering/blob/master/main.py), dans la fonction `startDBscan(filename)` aux lignes 39 & 40 et modifier le paramètre souhaité avant d'enregistrer et d'exécuter le code à nouveau. 
 
 **Attention** : A la fin de l'exécution de l'algorithme, l'image affichée dans l'application sera modifiée : chaque pixel prend la couleur du cluster auquel il est associé, pour KMeans avec k = 16, il n'y aura donc plus que 16 couleurs. En lancant un nouvel algorithme, l'image traitée ne sera alors pas l'image affichée, mais celle sélectionnée précédemment avec l'explorateur de fichier, et ce, jusqu'à ce qu'une autre image sois sélectionnée par ce moyen.
 
