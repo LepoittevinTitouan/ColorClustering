@@ -94,7 +94,7 @@ class DBScan():
 
 
 
-def process(filename, eps, minPts, euclidienne = True):
+def process(filename, eps = 8, minPts = 4, euclidienne = True):
 
     startTime = time.time()
 

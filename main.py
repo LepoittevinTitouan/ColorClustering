@@ -15,15 +15,33 @@ import time
 def show_buttons(file):
     kMeansButton=Button(top,text="KMeans", command=lambda: startKMeans(file), padx=10,pady=5)
     kMeansButton.configure(background='#364156', foreground='white', font=('arial',10,'bold'))
-    kMeansButton.place(relx=0.79,rely=0.46)
-    
-    DBScanButton=Button(top,text="DBScan", command=lambda: startDBscan(file), padx=10,pady=5)
+    kMeansButton.place(relx=0.79,rely=0.42)
+
+    EpsLabel = Label(top,text = "Epsilon :")
+    EpsLabel.configure(background='#CDCDCD',foreground='#364156')
+    EpsLabel.place(relx=0.79,rely=0.58)
+
+    DBScanEps = Entry(top,width=10)
+    DBScanEps.configure(font=('arial',10))
+    DBScanEps.place(relx=0.79,rely=0.62)
+    DBScanEps.insert(END,"8")
+
+    MinPtsLabel = Label(top,text = "MinPts :")
+    MinPtsLabel.configure(background='#CDCDCD',foreground='#364156')
+    MinPtsLabel.place(relx=0.79,rely=0.66)
+
+    DBScanMinPts = Entry(top,width=10)
+    DBScanMinPts.configure(font=('arial',10))
+    DBScanMinPts.place(relx=0.79,rely=0.70)
+    DBScanMinPts.insert(END,"4")
+
+    DBScanButton=Button(top,text="DBScan", command=lambda: startDBscan(file,float(DBScanEps.get()),int(DBScanMinPts.get())), padx=10,pady=5)
     DBScanButton.configure(background='#364156', foreground='white', font=('arial',10,'bold'))
     DBScanButton.place(relx=0.79,rely=0.52)
 
 def upload_image():
     try:
-        file_path=filedialog.askopenfilename()
+        file_path=filedialog.askopenfilename(initialdir="./")
         uploaded=Image.open(file_path)
         w, h = uploaded.size
         uploaded.thumbnail((300, int((h*300)/w)))
@@ -35,9 +53,7 @@ def upload_image():
     except:
         pass
 
-def startDBscan(filename):
-    eps = 8
-    minPts = 4
+def startDBscan(filename,eps,minPts):
     newData = DBScan.process(filename, eps, minPts)
     size = utils.getSize(filename)
     flatData = [int(item) for sublist in newData for item in sublist]
@@ -91,6 +107,7 @@ def switchDistance():
     euclidienne = False if euclidienne else True
     distanceSTR = "Euclidienne" if euclidienne else "Manhattan"
     distanceButton.configure(text=distanceSTR)
+
 
 if __name__ == "__main__" :
     result = []
